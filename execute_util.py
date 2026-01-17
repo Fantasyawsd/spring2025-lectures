@@ -16,7 +16,7 @@ _BILINGUAL_ENABLED = os.getenv("CS336_BILINGUAL", "1").lower() not in {"0", "fal
 
 
 def _contains_chinese(text: str) -> bool:
-    return re.search(r"[\u4e00-\u9fff]", text) is not None
+    return re.search(r"[\u4e00-\u9fa5]", text) is not None
 
 
 def _contains_latin(text: str) -> bool:
