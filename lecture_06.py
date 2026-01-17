@@ -6,12 +6,19 @@ from torch.profiler import ProfilerActivity
 from torch.utils.cpp_extension import load_inline
 import triton
 import triton.language as tl
-from execute_util import text, link, image
+from execute_util import text as text_en, link, image
 from file_util import ensure_directory_exists
 from lecture_util import article_link
 from torch_util import get_device
 from lecture_06_utils import check_equal, check_equal2, get_local_url, round1, mean
 import os
+
+
+def text(message: str, style: dict | None = None, verbatim: bool = False):
+    if verbatim or not message.strip():
+        return text_en(message, style=style, verbatim=verbatim)
+    return text_en(f"{message}\n\n（中文翻译待补）", style=style, verbatim=verbatim)
+
 
 def main():
     announcements()

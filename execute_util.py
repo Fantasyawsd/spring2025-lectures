@@ -12,45 +12,6 @@ from dataclasses import dataclass
 from arxiv_util import is_arxiv_link, arxiv_reference
 from reference import Reference
 
-_BILINGUAL_ENABLED = os.getenv("CS336_BILINGUAL", "1").lower() not in {"0", "false", "no"}
-_HAS_TRANSLATION_KEYS = bool(os.getenv("OPENAI_API_KEY") or os.getenv("TOGETHER_API_KEY"))
-
-
-def _contains_chinese(text: str) -> bool:
-    return re.search(r"[\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff]", text) is not None
-
-
-def _translate_to_zh(message: str) -> str:
-    if _HAS_TRANSLATION_KEYS:
-        from model_util import query_gpt4o
-
-        prompt = (
-            "Translate the following markdown text to Simplified Chinese. "
-            "Preserve markdown formatting, links, and code exactly. "
-            "Return only the translated text.\n"
-            "<text>\n"
-            f"{message}\n"
-            "</text>"
-        )
-        try:
-            return query_gpt4o(prompt=prompt).strip()
-        except Exception:
-            return "（中文翻译待补）"
-    return "（中文翻译待补）"
-
-
-def _bilingualize(message: str) -> str:
-    if not _BILINGUAL_ENABLED:
-        return message
-    if not message.strip():
-        return message
-    if _contains_chinese(message):
-        return message
-    translation = _translate_to_zh(message)
-    if not translation:
-        return message
-    return f"{message}\n\n{translation}"
-
 @dataclass(frozen=True)
 class CodeLocation:
     """Refers to a specific line of code."""
@@ -86,7 +47,7 @@ def text(message: str, style: dict | None = None, verbatim: bool = False):
             **style
         }
     else:
-        messages = [_bilingualize(message)]
+        messages = [message]
 
     for message in messages:
         _current_renderings.append(Rendering(type="markdown", data=message, style=style))

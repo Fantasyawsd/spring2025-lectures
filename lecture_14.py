@@ -11,9 +11,16 @@ import mmh3
 from bitarray import bitarray
 from basic_util import count, repeat
 from file_util import download_file
-from execute_util import text, image, link
+from execute_util import text as text_en, image, link
 from lecture_util import article_link, named_link
 from references import dolma
+
+
+def text(message: str, style: dict | None = None, verbatim: bool = False):
+    if verbatim or not message.strip():
+        return text_en(message, style=style, verbatim=verbatim)
+    return text_en(f"{message}\n\n（中文翻译待补）", style=style, verbatim=verbatim)
+
 
 def main():
     text("Last lecture: overview of datasets used for training language models")

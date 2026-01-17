@@ -5,10 +5,17 @@ from typing import List, Callable
 import torch.nn.functional as F
 import torch.distributed as dist
 import torch.distributed.fsdp
-from execute_util import text, image, link, system_text
+from execute_util import text as text_en, image, link, system_text
 from torch_util import get_device
 from lecture_util import article_link
 from lecture_08_utils import spawn, int_divide, summarize_tensor, get_init_params, render_duration
+
+
+def text(message: str, style: dict | None = None, verbatim: bool = False):
+    if verbatim or not message.strip():
+        return text_en(message, style=style, verbatim=verbatim)
+    return text_en(f"{message}\n\n（中文翻译待补）", style=style, verbatim=verbatim)
+
 
 def main():
     text("Last week: parallelism within a single GPU")

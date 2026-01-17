@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from collections import defaultdict
 import random
 
-from execute_util import link, image, text
+from execute_util import link, image, text as text_en
 from lecture_util import article_link, x_link, youtube_link
 from references import gpt_3, gpt4, shannon1950, bengio2003, susketver2014, \
     bahdanau2015_attention, transformer_2017, gpt2, t5, kaplan_scaling_laws_2020, \
@@ -19,6 +19,12 @@ from data import get_common_crawl_urls, read_common_crawl, write_documents, mark
 from model_util import query_gpt4o
 
 import tiktoken
+
+
+def text(message: str, style: dict | None = None, verbatim: bool = False):
+    if verbatim or not message.strip():
+        return text_en(message, style=style, verbatim=verbatim)
+    return text_en(f"{message}\n\n（中文翻译待补）", style=style, verbatim=verbatim)
 
 def main():
     welcome()

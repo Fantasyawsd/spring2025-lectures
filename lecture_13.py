@@ -1,6 +1,12 @@
-from execute_util import text, image, link
+from execute_util import text as text_en, image, link
 from lecture_util import article_link, named_link
 from references import dclm_2024, nemotron_cc_2024, olmo2, llama3, gpt2, openwebtext, gopher, alpaca
+
+
+def text(message: str, style: dict | None = None, verbatim: bool = False):
+    if verbatim or not message.strip():
+        return text_en(message, style=style, verbatim=verbatim)
+    return text_en(f"{message}\n\n（中文翻译待补）", style=style, verbatim=verbatim)
 
 
 def main():
