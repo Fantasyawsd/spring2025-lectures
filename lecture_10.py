@@ -1,5 +1,5 @@
 from sympy import symbols, oo
-from execute_util import text, link, image
+from execute_util import text as text_en, link, image
 from lecture_util import article_link
 from references import Reference, llama3, gqa, mla, longformer, sparse_transformer, mistral_7b
 
@@ -10,6 +10,13 @@ memory_bandwidth = symbols("memory_bandwidth", positive=True)
 
 scaling_book_transformers = Reference(title="[Scaling book chapter on Transformers]", url="https://jax-ml.github.io/scaling-book/transformers/")
 scaling_book_inference = Reference(title="[Scaling book chapter on Transformers]", url="https://jax-ml.github.io/scaling-book/inference/")
+
+
+def text(message: str, style: dict | None = None, verbatim: bool = False):
+    if verbatim or not message.strip():
+        return text_en(message, style=style, verbatim=verbatim)
+    return text_en(f"{message}\n\n（中文翻译待补）", style=style, verbatim=verbatim)
+
 
 def main():
     text("**Inference**: given a **fixed model**, generate responses given prompts")

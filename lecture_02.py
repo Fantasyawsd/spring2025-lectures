@@ -1,4 +1,4 @@
-from execute_util import text, link, image
+from execute_util import text as text_en, link, image
 from facts import a100_flop_per_sec, h100_flop_per_sec
 import torch.nn.functional as F
 import timeit
@@ -10,6 +10,12 @@ from lecture_util import article_link
 from jaxtyping import Float
 from einops import rearrange, einsum, reduce
 from references import zero_2019
+
+
+def text(message: str, style: dict | None = None, verbatim: bool = False):
+    if verbatim or not message.strip():
+        return text_en(message, style=style, verbatim=verbatim)
+    return text_en(f"{message}\n\n（中文翻译待补）", style=style, verbatim=verbatim)
 
 
 def main():

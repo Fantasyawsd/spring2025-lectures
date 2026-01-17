@@ -8,11 +8,18 @@ import torch.nn as nn
 from torch.nn import functional as F
 from torch.nn.functional import softmax
 from einops import einsum, rearrange, repeat
-from execute_util import text, link, image
+from execute_util import text as text_en, link, image
 from lecture_util import named_link
 from references import ppo2017, grpo, qwen3, llama3
 import matplotlib.pyplot as plt
 from tqdm import tqdm
+
+
+def text(message: str, style: dict | None = None, verbatim: bool = False):
+    if verbatim or not message.strip():
+        return text_en(message, style=style, verbatim=verbatim)
+    return text_en(f"{message}\n\n（中文翻译待补）", style=style, verbatim=verbatim)
+
 
 def main():
     text("Last lecture: overview of RL from verifiable rewards (policy gradient)")
