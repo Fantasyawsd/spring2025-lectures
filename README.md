@@ -17,6 +17,11 @@ You can compile a lecture by running:
 which generates a `var/traces/lecture_01.json` and caches any images as
 appropriate.
 
+Executable lecture text now renders in zh/en bilingual form by default. Set
+`CS336_BILINGUAL=0` to disable this behavior. If `OPENAI_API_KEY` or
+`TOGETHER_API_KEY` is set, translations are generated automatically; otherwise
+the Chinese line is marked as a placeholder.
+
 However, if you want to run it on the cluster, you can do:
 
         ./remote_execute.sh lecture_01
