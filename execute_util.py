@@ -32,7 +32,10 @@ def _translate_to_zh(message: str) -> str:
             f"{message}\n"
             "</text>"
         )
-        return query_gpt4o(prompt=prompt).strip()
+        try:
+            return query_gpt4o(prompt=prompt).strip()
+        except Exception:
+            return "（中文翻译待补）"
     return "（中文翻译待补）"
 
 
